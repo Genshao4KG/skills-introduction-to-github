@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2022.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    span.s1 {font: 12.0px 'PingFang SC'}
+    span.s2 {font: 14.0px 'PingFang SC'; font-kerning: none; color: #1c1f38; background-color: #ffffff; -webkit-text-stroke: 0px #1c1f38}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="utf-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;<span class="s1">简易地图热区</span>&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#container { width: 100%; height: 100vh; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="container"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://webapi.amap.com/maps?v=2.0&amp;key=<span class="s2">https://restapi.amap.com/v3/staticmap?parameters</span>"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// <span class="s1">初始化地图</span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>var map = new AMap.Map('container', {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>zoom: 10, // <span class="s1">初始缩放级别</span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>center: [116.397428, 39.90923] // <span class="s1">初始中心点（如北京市中心）</span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// <span class="s1">定义热区数据（示例）</span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>var areas = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: "<span class="s1">天安门</span>",</p>
+<p class="p1"><span class="Apple-converted-space">                </span>coords: [[116.397428,39.90923], [116.403843,39.90923], [116.403843,39.915], [116.397428,39.915]],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>events: "1949<span class="s1">年</span>10<span class="s1">月</span>1<span class="s1">日，中华人民共和国成立典礼在此举行。</span>"</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// <span class="s1">更多区域</span>...</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// <span class="s1">添加热区及点击事件</span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>areas.forEach(area =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>var polygon = new AMap.Polygon({</p>
+<p class="p1"><span class="Apple-converted-space">                </span>path: area.coords,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>fillColor: 'rgba(255,0,0,0.3)', // <span class="s1">热区填充色</span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>strokeColor: '#FF0000'</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>polygon.on('click', function(e) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>new AMap.InfoWindow({</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>content: `&lt;h3&gt;${area.name}&lt;/h3&gt;&lt;p&gt;${area.events}&lt;/p&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>offset: new AMap.Pixel(0, -30)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}).open(map, e.lnglat);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>map.add(polygon);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
