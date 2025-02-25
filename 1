@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>简易地图热区</title>
+    <style>
+        #container { width: 100%; height: 100vh; }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=https://restapi.amap.com/v3/staticmap?parameters"></script>
+    <script>
+        // 初始化地图
+        var map = new AMap.Map('container', {
+            zoom: 10, // 初始缩放级别
+            center: [116.397428, 39.90923] // 初始中心点（如北京市中心）
+        });
+
+        // 定义热区数据（示例）
+        var areas = [
+            {
+                name: "天安门",
+                coords: [[116.397428,39.90923], [116.403843,39.90923], [116.403843,39.915], [116.397428,39.915]],
+                events: "1949年10月1日，中华人民共和国成立典礼在此举行。"
+            },
+            // 更多区域...
+        ];
+
+        // 添加热区及点击事件
+        areas.forEach(area => {
+            var polygon = new AMap.Polygon({
+                path: area.coords,
+                fillColor: 'rgba(255,0,0,0.3)', // 热区填充色
+                strokeColor: '#FF0000'
+            });
+            polygon.on('click', function(e) {
+                new AMap.InfoWindow({
+                    content: `<h3>${area.name}</h3><p>${area.events}</p>`,
+                    offset: new AMap.Pixel(0, -30)
+                }).open(map, e.lnglat);
+            });
+            map.add(polygon);
+        });
+    </script>
+</body>
+</html>
